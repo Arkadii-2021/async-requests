@@ -4,8 +4,8 @@ const pollAnswers = document.getElementById('poll__answers');
 const elementsModalMain = document.getElementsByClassName('modal').modal_main;
 const pollAnswer = document.getElementsByClassName('poll__answer');
 
-xhr.addEventListener('readystatechange', () => {
-	if (xhr.readyState === xhr.DONE) {
+xhr.onload = function() {
+	if (xhr.status == 200) {
 		let resp = JSON.parse(xhr.responseText);
 		poolTitle.innerText = resp.data.title;
 		for (let btnText of resp.data.answers) {
@@ -18,8 +18,10 @@ xhr.addEventListener('readystatechange', () => {
 				document.querySelector('.card').style = 'display: none;'
 			})
 		})
+	} else {
+		alert("Запрос не удался");
 	} 
-});
+}
 
 xhr.open('GET', 'https://netology-slow-rest.herokuapp.com/poll.php');
 xhr.send();
