@@ -1,14 +1,8 @@
 document.forms.form.addEventListener('submit', (e) => {
 	e.preventDefault();
 	const xhr = new XMLHttpRequest();
-	document.getElementById('send').onclick = function() {
-		xhr.addEventListener('readystatechange', () => 
-			if (xhr.readyState === xhr.DONE && xhr.status == 200) {
-				xhr.upload.onprogress = function(event) {
-					document.getElementById('progress').value = match.round(((event.loaded * 100) / event.total) / 100);
-				}
-			}
-		})
+	xhr.upload.onprogress = function(event) {
+		document.getElementById('progress').value = (event.loaded / event.total);
 	}
 	xhr.open('POST', 'https://netology-slow-rest.herokuapp.com/upload.php');
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
